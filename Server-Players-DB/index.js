@@ -119,7 +119,7 @@ app.delete("/players_cards/:id", async (req, res) => {
       "DELETE FROM players_info WHERE player_id = $1",
       [id]
     );
-    res.json("Player Was Deleted!");
+    res.json("Player Was Deleted!"); 
   } catch (error) {
     console.error(error.message);
   }
