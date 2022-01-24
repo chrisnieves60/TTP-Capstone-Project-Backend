@@ -74,7 +74,7 @@ app.get("/players_cards/:id", async (req, res) => {
     );
     res.json(player.rows[0]);
   } catch (error) {
-    console.error(error.message);
+    res.json({ error: error.message });
   }
 });
 
