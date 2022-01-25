@@ -4,6 +4,7 @@ const cors = require("cors");
 const compression = require("compression"); // import compression to reduce size of response
 const port = process.env.PORT || 5000;
 const pool = require("./db");
+const login_db = require("./login_and_signup_db");
 
 //middleware
 app.use(compression()); // use compression middleware
@@ -14,7 +15,7 @@ app.get("/", (req, res) => {
   res.json({ text: "Hello World" });
 });
 
-//--------------------------- ROUTES --------------------------
+//--------------------------- ROUTES FOR PLAYER'S DATABASE --------------------------
 // Columns:
 // player_id
 // player_name
@@ -74,7 +75,7 @@ app.get("/players_cards/:id", async (req, res) => {
     );
     res.json(player.rows[0]);
   } catch (error) {
-    res.json({ error: error.message });
+    console.error(error.message);
   }
 });
 
@@ -122,6 +123,12 @@ app.get("/players_cards/:id", async (req, res) => {
 //     console.error(error.message);
 //   }
 // });
+
+//--------------------------- ROUTES FOR LOGIN AND SIGN UP --------------------------
+app.post("/signup", login_db.createUser);
+app.post("/login", login_db.login);
+app.get("/users", login_db.getUsers);
+app.get("/user/:id", login_db.getUser);
 
 //Listen to port
 app.listen(port, () => {
