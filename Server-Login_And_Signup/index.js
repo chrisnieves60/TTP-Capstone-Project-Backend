@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
     res.send("Hello World!")
 })
 
+app.get("/login/:id", db.getUser); 
 app.post("/users", db.createUser); 
 app.post("/login", db.login); 
 app.listen(5000, () => {

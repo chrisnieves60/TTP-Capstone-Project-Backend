@@ -14,7 +14,7 @@ const pool = new Pool({
 
 const createUser = async (request, response) => {
     try{
-    const {username, email, password} = request.body;
+    const {username, email, password, currency} = request.body;
     let errors = {}                     //maybe const?
 
     if (!emailValidation(email)){
@@ -41,8 +41,8 @@ const createUser = async (request, response) => {
     const hashedPassword = await bcrypt.hash(password, salt); //hash encryption
     
     const newUser = await pool.query(
-        "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *", 
-        [username, email, hashedPassword]
+        "INSERT INTO users (username, email, password, currency) VALUES ($1, $2, $3, $4) RETURNING *", 
+        [username, email, hashedPassword, currency]
     )//what this does: hey so you got the username, email, and password, i want you to
     // run a query on the database so that it inserts this information using the sql in the quotes
     response.json({success: true, data: newUser.rows[0]}); 
@@ -79,4 +79,23 @@ const login = async (request, response) => {
     }
 }
 
-module.exports = {createUser, login}
+
+const getUser = async (req, res) => {
+    const { id } = req.params;
+    const query = "SELECT * FROM users WHERE id = $1";
+    const values = [id];
+    try {
+      const { rows } = await pool.query(query, values);
+      if (rows.length === 0) {
+        res.status(404).json({
+          error: "User not found",
+        });
+      }
+      res.json(rows[0]);
+    } catch (err) {
+      res.status(500).send("Server Error");
+    }
+  };
+  
+
+module.exports = {getUser, createUser, login}
