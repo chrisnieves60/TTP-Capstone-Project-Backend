@@ -61,7 +61,7 @@ const login = async (request, response) => {
             "SELECT * FROM users WHERE email = $1", 
             [email]
         )
-
+        
         if (user.rows.length === 0){
             response.status(400).json({ errors: "Email is not registered"});  
         }
@@ -97,5 +97,18 @@ const getUser = async (req, res) => {
     }
   };
   
+const updateCurrency = async (req, res) => {
+    try {
+        const {id} = req.params; 
+        const {currency} = req.body;
+        const changeCurrency = await pool.query("UPDATE users SET currency = $1 WHERE id = $2", //update in users table set currency to $1
+         [currency, id] //specify table
+        );
 
-module.exports = {getUser, createUser, login}
+        res.json("currency was updated!")
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+module.exports = {getUser, createUser, login, updateCurrency}
