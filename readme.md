@@ -15,4 +15,4 @@ Players' Cards Database endpoint on Heroku: https://ttp-capstone-project-backend
 <li>/login: POST request to insert the user's email and password. NOTE: The user must be registered first by signing up!! Otherwise, it will result in getting an error saying that "Email is not registered". </li>
 <li>/users: GET request to get all of the users' information. </li>
 <li>/users/id: GET request to get one user's information. </li>
-</div> 
+</div>
