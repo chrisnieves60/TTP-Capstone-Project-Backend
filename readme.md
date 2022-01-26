@@ -7,7 +7,8 @@ Players' Cards Database endpoint on Heroku: https://ttp-capstone-project-backend
 <li>/players_cards: GET request to get all of the players' cards (info)</li>
 <li>/players_cards/id: GET request to get one player's card (info)</li>
 </div>
-
+<br>
+<br>
 <div>
 -- Login and Sign Up routes on Heroku:
 <li>/signup: POST request to insert a new user's username, email, password, and currency/balance</li>
