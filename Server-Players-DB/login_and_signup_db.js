@@ -107,4 +107,37 @@ const getUser = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, getUser, createUser, login };
+const updateCurrency = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { currency } = req.body;
+    const changeCurrency = await pool.query(
+      "UPDATE users SET currency = $1 WHERE id = $2", //update in users table set currency to $1
+      [currency, id] //specify table
+    );
+
+    res.json("currency was updated!");
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await pool.query("DELETE FROM users WHERE id = $1", [id]);
+    
+    res.json("User was deleted!");
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+module.exports = {
+  getUsers,
+  getUser,
+  createUser,
+  login,
+  updateCurrency,
+  deleteUser,
+};

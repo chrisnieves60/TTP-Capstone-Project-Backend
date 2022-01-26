@@ -129,6 +129,8 @@ app.post("/signup", login_db.createUser);
 app.post("/login", login_db.login);
 app.get("/users", login_db.getUsers);
 app.get("/user/:id", login_db.getUser);
+app.put("/user/:id", login_db.updateCurrency);
+app.delete("/user/:id", login_db.deleteUser);
 
 //Listen to port
 app.listen(port, () => {
