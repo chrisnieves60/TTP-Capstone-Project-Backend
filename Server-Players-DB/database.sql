@@ -12,3 +12,17 @@ CREATE TABLE players_info(
 );
 
 SELECT * FROM players_info;
+
+-------------------------------------------------------------------------------
+
+CREATE DATABASE gacha;
+
+CREATE TABLE users(
+    id SERIAL NOT NULL PRIMARY KEY, 
+    username VARCHAR(30) NOT NULL, 
+    email VARCHAR (255) NOT NULL,
+    password VARCHAR(255) NOT NULL, 
+    currency INTEGER NOT NULL
+);
+
+SELECT * FROM users;
