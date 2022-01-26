@@ -17,6 +17,7 @@ app.get("/", (req, res) => {
 app.get("/login/:id", db.getUser); 
 app.post("/users", db.createUser); 
 app.post("/login", db.login); 
+app.put("/login/:id", db.updateCurrency); 
 app.listen(5000, () => {
     console.log("Server started on port 5000")
 }); 
