@@ -132,6 +132,48 @@ app.get("/user/:id", login_db.getUser);
 app.put("/user/:id", login_db.updateCurrency);
 app.delete("/user/:id", login_db.deleteUser);
 
+//--------------------------- ROUTES FOR USER'S COLLECTION --------------------------
+app.post("/users_collection", async (req, res) => {
+  try {
+    const { user_id, player_id } = req.body;
+    const newUserCollection = await pool.query(
+      "INSERT INTO users_collection (user_id, player_id) VALUES ($1, $2) RETURNING *",
+      [user_id, player_id]
+    );
+    res.json(newUserCollection.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//returns everything that's in the "users_collection" table
+app.get("/users_collection", async (req, res) => {
+  try {
+    const allUsersCollection = await pool.query(
+      "SELECT * FROM users_collection"
+    );
+    res.json(allUsersCollection.rows[0]);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//takes user's id as a param
+//return 1 or more (array) player's id (player's cards)
+app.get("/users_collection/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const usersCollection = await pool.query(
+      "SELECT * FROM users_collection WHERE user_id= $1",
+      [id]
+    );
+    res.json(usersCollection.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
 //Listen to port
 app.listen(port, () => {
   console.log(`Server has started on port ${port}`);

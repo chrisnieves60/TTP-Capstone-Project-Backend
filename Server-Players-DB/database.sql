@@ -1,4 +1,4 @@
-CREATE DATABASE nba_players_cards;
+-- DATABASE ON HEROKU
 
 CREATE TABLE players_info(
   player_id SERIAL PRIMARY KEY,
@@ -15,8 +15,6 @@ SELECT * FROM players_info;
 
 -------------------------------------------------------------------------------
 
-CREATE DATABASE gacha;
-
 CREATE TABLE users(
     id SERIAL NOT NULL PRIMARY KEY, 
     username VARCHAR(30) NOT NULL, 
@@ -26,3 +24,10 @@ CREATE TABLE users(
 );
 
 SELECT * FROM users;
+
+-------------------------------------------------------------------------------
+
+CREATE TABLE users_collection(
+  user_id INTEGER NOT NULL, 
+  player_id INTEGER NOT NULL
+);
