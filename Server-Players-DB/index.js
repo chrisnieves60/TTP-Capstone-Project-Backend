@@ -152,7 +152,7 @@ app.get("/users_collection", async (req, res) => {
     const allUsersCollection = await pool.query(
       "SELECT * FROM users_collection"
     );
-    res.json(allUsersCollection.rows[0]);
+    res.json(allUsersCollection.rows);
   } catch (error) {
     console.error(error.message);
   }
@@ -167,7 +167,20 @@ app.get("/users_collection/:id", async (req, res) => {
       "SELECT * FROM users_collection WHERE user_id= $1",
       [id]
     );
-    res.json(usersCollection.rows);
+
+    let result = [];
+    usersCollection.rows.map(async (e) => {
+      let current_id = e.player_id;
+      let currentPlayers = await pool.query(
+        "SELECT * FROM players_info WHERE player_id = $1",
+        [current_id]
+      );
+      result.push(currentPlayers.rows);
+    });
+
+    console.log(usersCollection.rows);
+    // allUsersCollection.map(() => {});
+    res.json(result);
   } catch (error) {
     console.error(error.message);
   }
