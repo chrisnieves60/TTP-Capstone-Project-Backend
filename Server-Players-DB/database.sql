@@ -31,3 +31,5 @@ CREATE TABLE users_collection(
   user_id INTEGER NOT NULL, 
   player_id INTEGER NOT NULL
 );
+
+SELECT * FROM users_collection;

@@ -132,7 +132,8 @@ app.get("/user/:id", login_db.getUser);
 app.put("/user/:id", login_db.updateCurrency);
 app.delete("/user/:id", login_db.deleteUser);
 
-//--------------------------- ROUTES FOR USER'S COLLECTION --------------------------
+//--------------------------- ROUTES FOR USER'S COLLECTION (JOINT TABLE) --------------------------
+//inserts the user's id (of the user that's logged in) and the player's id (of the card that they received from opening a pack/chest)
 app.post("/users_collection", async (req, res) => {
   try {
     const { user_id, player_id } = req.body;
@@ -159,7 +160,7 @@ app.get("/users_collection", async (req, res) => {
 });
 
 //takes user's id as a param
-//return 1 or more (array) player's id (player's cards)
+//returns an array of objects of the user's id (passed as a param) and their players' id (players cards)
 app.get("/users_collection/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -170,6 +171,7 @@ app.get("/users_collection/:id", async (req, res) => {
 
     let result = [];
     usersCollection.rows.map(async (e) => {
+      console.log(e);
       let current_id = e.player_id;
       let currentPlayers = await pool.query(
         "SELECT * FROM players_info WHERE player_id = $1",
@@ -178,7 +180,7 @@ app.get("/users_collection/:id", async (req, res) => {
       result.push(currentPlayers.rows);
     });
 
-    console.log(usersCollection.rows);
+    res.json(usersCollection.rows);
     // allUsersCollection.map(() => {});
     res.json(result);
   } catch (error) {
@@ -186,6 +188,20 @@ app.get("/users_collection/:id", async (req, res) => {
   }
 });
 
+//takes user's id as a param
+//deletes a user's collection based on the user's id (passed as a param)
+app.delete("/users_collection/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const usersCollection = await pool.query(
+      "DELETE FROM users_collection WHERE user_id = $1",
+      [id]
+    );
+    res.json("User's collection was deleted!");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 //Listen to port
 app.listen(port, () => {

@@ -125,8 +125,10 @@ const updateCurrency = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedUser = await pool.query("DELETE FROM users WHERE id = $1", [id]);
-    
+    const deletedUser = await pool.query("DELETE FROM users WHERE id = $1", [
+      id,
+    ]);
+
     res.json("User was deleted!");
   } catch (err) {
     console.error(err.message);
