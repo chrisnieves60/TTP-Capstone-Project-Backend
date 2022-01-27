@@ -24,6 +24,6 @@ Players' Cards Database endpoint on Heroku: https://ttp-capstone-project-backend
   -- User's collection routes on Heroku:
   <li>/users_collection: POST request to insert the user's id (of the user that's logged in) and the player's id (of the card that they received from opening a pack/chest) into the "users_collection" table.</li>
   <li>/users_collection: GET request to get everything that's in the "users_collection" table</li>
-  <li>/users_collection/:id: GET request to get an array of objects of the user's id (passed as a param) and their players' id (players cards)</li>
-  <li>/users_collection/:id: DELETE request to delete a user's collection based on the user's id (passed as a param).</li>
+  <li>/users_collection/id: GET request to get an array of objects of the user's id (passed as a param) and their players' id (players cards)</li>
+  <li>/users_collection/id: DELETE request to delete a user's collection based on the user's id (passed as a param).</li>
 </div>
